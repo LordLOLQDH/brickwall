@@ -98,7 +98,18 @@ function renderChallenge(view){
   {id:'odd',label:'Mindestens drei Ziffern',test:s=>(s.match(/[0-9]/g)||[]).length>=3},
   {id:'length',label:'Mindestens 4 verschiedene Sonderzeichen',test:s=>new Set((s.match(/[!?#+$%&*._-]/g)||[])).size>=4}
  ];return options[Math.floor(Math.random()*options.length)]};
+ const ruleFor=r=>{const defs={
+ upper:{label:'Mindestens ein Großbuchstabe',test:s=>/[A-Z]/.test(s)},
+ lower:{label:'Mindestens ein Kleinbuchstabe',test:s=>/[a-z]/.test(s)},
+ digit:{label:'Mindestens eine Ziffer',test:s=>/[0-9]/.test(s)},
+ symbol:{label:'Mindestens ein Sonderzeichen (!?#+)',test:s=>/[!?#+$%&*]/.test(s)},
+ double:{label:'Zwei gleiche Zeichen direkt hintereinander',test:s=>/(.)\\1/.test(s)},
+ at:{label:'Das Zeichen @ muss vorkommen',test:s=>s.includes('@')},
+ odd:{label:'Mindestens drei Ziffern',test:s=>(s.match(/[0-9]/g)||[]).length>=3},
+ length:{label:'Mindestens 4 verschiedene Sonderzeichen',test:s=>new Set((s.match(/[!?#+$%&*._-]/g)||[])).size>=4}
+ };return defs[r&&r.id]?{id:r.id,...defs[r.id]}:randomReq()};
  if(!Array.isArray(state.requirements)||!state.requirements.length)state.requirements=[randomReq(),randomReq(),randomReq()];
+ state.requirements=state.requirements.map(ruleFor);
  const save=()=>{state.savedAt=new Date().toISOString();safeStore.set('challengeState',state)};
  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  view.innerHTML=`
