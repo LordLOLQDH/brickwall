@@ -45,6 +45,11 @@ const toast=msg=>{$('#toast').textContent=msg;log(msg)};
 const bump=()=>{$('#clickCount').textContent=String(++clicks)};
 const persistTasks=()=>{safeStore.set('tasks',tasks);$('#taskStatus').textContent=tasks.length+' Aufgaben offen.';renderTasks()};
 const renderTasks=()=>{const list=$('#taskList');if(!list)return;list.replaceChildren();if(!tasks.length){const p=document.createElement('p');p.textContent='Keine offenen Aufgaben. Ein seltenes Wunder.';list.append(p);return}tasks.forEach((t,i)=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:8px;align-items:center;margin:7px 0;overflow-wrap:anywhere';const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!t.done;cb.setAttribute('aria-label','Aufgabe erledigt');cb.addEventListener('change',()=>{tasks[i].done=cb.checked;safeStore.set('tasks',tasks);renderTasks();toast(cb.checked?'Aufgabe als erledigt markiert.':'Aufgabe wieder geöffnet.');bump()});const label=document.createElement('span');label.textContent=t.text;label.style.textDecoration=t.done?'line-through':'none';label.style.flex='1';const del=document.createElement('button');del.type='button';del.textContent='Löschen';del.addEventListener('click',()=>{tasks.splice(i,1);persistTasks();toast('Aufgabe wirklich gelöscht.');bump()});row.append(cb,label,del);list.append(row)})};
+document.addEventListener('copy',e=>{if(document.querySelector('#passPad'))e.preventDefault()});
+document.addEventListener('cut',e=>{if(document.querySelector('#passPad'))e.preventDefault()});
+document.addEventListener('paste',e=>{if(document.querySelector('#passPad'))e.preventDefault()});
+document.addEventListener('contextmenu',e=>{if(document.querySelector('#passPad'))e.preventDefault()});
+document.addEventListener('keydown',e=>{if(document.querySelector('#passPad')&&((e.ctrlKey||e.metaKey)&&['c','v','x'].includes(e.key.toLowerCase())||e.key==='Insert')){e.preventDefault();toast('Tastaturkürzel gesperrt. Bitte die Zeichen einzeln anklicken.')}});
 const formPanel=$('#brickForm').closest('.panel');
 const pages={
  challenge:['Anmeldung zur Unannehmlichkeit','Erstellen Sie hier ausschließlich Testdaten. Keine echten Zugangsdaten verwenden.'],
