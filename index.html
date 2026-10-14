@@ -5,70 +5,67 @@
 <meta name="theme-color" content="#6d4c32"><meta name="description" content="BRICKWALL — eine absichtlich abscheuliche Backstein-Benutzeroberfläche.">
 <title>BRICKWALL :: Bedienung auf eigene Gefahr</title>
 <style>
-:root{--brick:#a74432;--brick-dark:#702b23;--mortar:#ead8bd;--paper:#fff4df;--ink:#29231e;--yellow:#ffcf4a;--green:#47784c}
-*{box-sizing:border-box;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-html{background:var(--mortar);scroll-behavior:smooth}
-body{margin:0;min-height:100vh;color:var(--ink);font-family:"Courier New",monospace;background-color:var(--mortar);background-image:linear-gradient(transparent 95%,#c5a98b 95%),linear-gradient(90deg,transparent 95%,#c5a98b 95%);background-size:100% 46px,90px 46px;background-position:0 0,45px 0}
-button,input,textarea,select{font:inherit;max-width:100%;border-radius:0}
-button{font-weight:bold;font-size:14px;padding:12px 15px;cursor:pointer;color:white;background:var(--brick);border:3px solid var(--brick-dark);box-shadow:4px 4px 0 #3f241d;transition:transform .08s;touch-action:manipulation}
-button:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #3f241d}
-button:disabled{opacity:.45;cursor:not-allowed}
-button.secondary{background:#51473c;border-color:#302820}
-button.yellow{color:#302820;background:var(--yellow);border-color:#8a6412}
-button.green{background:var(--green);border-color:#244729}
-button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px dashed #1557a5;outline-offset:3px}
-header.top{display:block;background:var(--brick-dark);color:white;padding:18px;border-bottom:8px solid var(--brick);text-align:center}
-.logo{font-family:"Courier New",monospace;font-size:clamp(25px,6vw,45px);font-weight:1000;letter-spacing:4px;text-shadow:3px 3px #38201b;color:white}
-.tagline,.tiny{font-size:11px;letter-spacing:2px;margin-top:8px}
-.top>div:last-child{margin-top:12px}
-.fakecrumb{font-size:11px;background:#cbb492;padding:8px;overflow-wrap:anywhere}
-.layout{width:min(760px,94%);margin:24px auto;padding:0;display:flex;flex-direction:column;gap:14px}
-.layout>aside:first-child{order:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
-.layout>main{order:1;min-width:0}
-.layout>aside:last-child{order:3;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
-.sidebox{min-width:0}.sidebox>.panel{margin:0}
+/* BRICKWALL 0.9 — absichtlich wie eine vergessene Geocities-Seite */
+html{background:#c0c0c0}
+body{margin:8px;background:#c0c0c0;color:#000;font-family:"Times New Roman",Times,serif;font-size:16px}
+*{box-sizing:border-box}
+button,input,textarea,select{font-family:Arial,sans-serif;font-size:13px}
+button{padding:2px 6px;color:buttontext;background:buttonface;border:2px outset buttonborder;border-radius:0;box-shadow:none;cursor:pointer}
+button:active{border-style:inset;transform:none;box-shadow:none}
+button:hover{background:#ddd;transform:none;box-shadow:none}
+button:disabled{opacity:.5}
+a{color:#00e;text-decoration:underline}a:visited{color:#551a8b}
+header.top{display:block;padding:3px;background:#000080;color:#fff;border:3px ridge #aaa;text-align:center}
+.logo{font-family:"Times New Roman",serif;font-size:32px;font-weight:bold;letter-spacing:0;text-shadow:none;color:#ffff00}
+.tagline,.tiny{font-family:"Courier New",monospace;font-size:11px;letter-spacing:0;margin-top:2px}
+.top>div:last-child{margin-top:3px}
+.fakecrumb{font:12px "Times New Roman",serif;background:#ffffcc;border:1px solid #808080;padding:2px;margin:4px 0}
+.layout{width:auto;max-width:none;margin:0;padding:0;display:block}
+.layout>aside:first-child,.layout>main,.layout>aside:last-child{display:block;order:initial;min-width:0}
+.sidebox{display:block;min-width:0}
+.sidebox>.panel{margin:5px 0}
 .brick{padding:0;border:0;outline:0;background:transparent;box-shadow:none}
-.panel{min-width:0;background:var(--paper);border:5px solid var(--brick-dark);padding:22px;margin-bottom:14px;box-shadow:9px 9px 0 #7d6551;overflow-wrap:anywhere}
-.panel h2,.panel h3{margin-top:0}
-.panel h2{font-size:20px}.panel h3{font-size:17px}
-.mainhead{background:var(--brick-dark);color:white;padding:20px;border:5px solid var(--brick);box-shadow:9px 9px 0 #7d6551;transform:none}
-.mainhead h1{font-size:clamp(24px,5vw,36px);margin:12px 0}
-.mainhead p{line-height:1.6}
-.stamp{display:inline-block;border:2px dashed var(--yellow);color:var(--yellow);padding:4px 8px;font-weight:bold;font-size:12px}
-.formrow{display:grid;gap:7px;margin:14px 0}.formrow input,.formrow textarea,.formrow select{width:100%;border:3px solid var(--brick-dark);padding:12px;background:white;color:var(--ink)}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.actions button{flex:0 1 auto}
-.counter{font-family:monospace;background:#29231e;color:#d6f5a4;padding:10px;overflow-wrap:anywhere}
-.notice,.warning{padding:12px;background:#f3d58b;border:2px dashed #8d5d20;margin:15px 0;font-size:12px;line-height:1.7;color:var(--ink)}
-.feed{max-height:170px;overflow:auto;border:3px inset #ad9478;background:white;padding:9px;font-family:monospace;font-size:12px}
-.status{font-size:12px;line-height:1.6;color:#4c3826}.footer{background:var(--brick-dark);color:#fff4df;text-align:center;padding:25px 12px;font-size:11px;line-height:1.8;border-top:8px solid var(--brick)}
-.broken{display:inline-block;background:#eee;color:#333;border:1px solid #777;padding:3px;font:11px Arial}
-.menu{display:grid;gap:9px}.menu button{width:100%;text-align:left;font-size:13px}
-.uglygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.uglygrid .panel{margin:0}
-#toast{min-height:24px;font-weight:bold;color:#ffcf4a;overflow-wrap:anywhere}
-.charpad{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin:10px 0}
-.charpad button{padding:10px 2px;min-width:0;background:#f3dfbd;color:var(--ink);border-color:#917456;box-shadow:2px 2px #59402e;overflow:hidden}
-.charpad button:active{background:var(--yellow)}
-.selected-char{font:13px monospace;min-height:42px;background:#f4e9d6;border:2px inset #ad9478;padding:10px;overflow-wrap:anywhere;word-break:break-all;margin:8px 0}
-.challenge-box{border:3px solid var(--brick-dark);background:#fff9eb;padding:14px;margin:14px 0;min-width:0}
-.challenge-progress{height:22px;border:3px solid var(--brick-dark);background:#c5b8a5;margin:12px 0;overflow:hidden}
-.challenge-progress span{display:block;height:100%;background:repeating-linear-gradient(45deg,#e0a72b,#e0a72b 10px,#ffdc70 10px,#ffdc70 20px);transition:width .2s}
-.rule-list{font:12px/1.6 monospace;padding-left:22px}.rule-list li{margin:5px 0}
-#view{min-width:0}#view .panel{margin-bottom:12px}
-input[type=checkbox]{width:20px;height:20px;accent-color:var(--brick);vertical-align:middle}
-.hardmode{filter:contrast(1.1) saturate(.7)}body.hardmode button{letter-spacing:1px}body.hardmode .panel{border-style:double}
-@media(min-width:1050px){.layout{width:min(1000px,94%);display:grid;grid-template-columns:200px minmax(0,1fr) 200px;align-items:start;gap:14px}.layout>aside:first-child,.layout>main,.layout>aside:last-child{order:initial;display:block}.layout>aside .panel{margin-bottom:14px}.layout>aside:first-child .panel,.layout>aside:last-child .panel{padding:14px}.layout>main{min-width:0}}
-@media(max-width:520px){.layout{width:calc(100% - 16px);margin:12px auto;gap:10px}.panel{padding:14px;box-shadow:5px 5px 0 #7d6551}.mainhead{padding:14px;box-shadow:5px 5px 0 #7d6551}.uglygrid{grid-template-columns:1fr}.charpad{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.charpad button{padding:10px 1px;font-size:13px}.actions{gap:8px}.actions button{flex:1 1 140px;min-height:44px}.menu button{min-height:44px}.logo{letter-spacing:2px}.fakecrumb{font-size:10px}}
+.panel{min-width:0;background:#eee;border:2px ridge #999;padding:8px;margin:5px 0;box-shadow:none;overflow-wrap:anywhere}
+.panel h2,.panel h3{margin:0 0 8px;text-decoration:none;text-transform:none}
+.panel h2{font-size:20px}.panel h3{font-size:16px}
+.mainhead{background:#fff;color:#000;padding:8px;border:2px ridge #999;box-shadow:none;transform:none}
+.mainhead h1{font:bold 26px "Times New Roman",serif;margin:8px 0}
+.mainhead p{line-height:normal}
+.stamp{display:inline;border:1px solid red;color:red;padding:1px;font-size:12px;font-weight:bold}
+.formrow{display:block;margin:10px 0}.formrow label{display:block}.formrow input,.formrow textarea,.formrow select{width:auto;max-width:100%;border:2px inset #aaa;padding:2px;background:white;color:black}
+.actions{display:block;margin:8px 0}.actions button{margin:2px;vertical-align:middle}
+.counter{font:13px "Courier New",monospace;background:#000;color:#0f0;padding:4px;overflow-wrap:anywhere}
+.notice,.warning{padding:6px;background:#ffff00;border:2px dashed red;margin:8px 0;font:12px "Courier New",monospace;line-height:normal;color:#000}
+.feed{max-height:120px;overflow:auto;border:2px inset #aaa;background:white;padding:4px;font:12px "Courier New",monospace}
+.status{font:12px "Times New Roman",serif;color:#333;line-height:normal}
+.footer{background:#000080;color:#fff;padding:8px;font:12px "Times New Roman",serif;text-align:center;border:3px ridge #aaa}
+.broken{display:inline;background:#ddd;color:#000;border:1px solid #777;padding:2px;font:11px Arial}
+.menu{display:block}.menu button{display:inline-block;width:auto;text-align:left;font-size:13px;margin:2px}
+.uglygrid{display:block}.uglygrid .panel{margin:5px 0}
+#toast{min-height:18px;font-weight:bold;color:#f00;overflow-wrap:anywhere}
+.charpad{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin:5px 0}
+.charpad button{padding:3px 1px;min-width:0;background:#ddd;color:#000;border:2px outset #aaa;box-shadow:none;overflow:hidden;font:12px Arial,sans-serif}
+.charpad button:active{background:#aaa;border-style:inset}
+.selected-char{font:13px "Courier New",monospace;min-height:24px;background:white;border:2px inset #aaa;padding:4px;overflow-wrap:anywhere;word-break:break-all;margin:5px 0}
+.challenge-box{border:2px ridge #aaa;background:#eee;padding:7px;margin:7px 0;min-width:0}
+.challenge-progress{height:14px;border:2px inset #aaa;background:#fff;margin:5px 0;overflow:hidden}
+.challenge-progress span{display:block;height:100%;background:#000080;transition:none}
+.rule-list{font:12px "Courier New",monospace;padding-left:22px}.rule-list li{margin:3px 0}
+#view{min-width:0}#view .panel{margin-bottom:5px}
+input[type=checkbox]{width:auto;height:auto;accent-color:auto;vertical-align:middle}
+.hardmode{filter:invert(.9)}body.hardmode button{letter-spacing:0}body.hardmode .panel{border-style:groove}
+@media(max-width:520px){body{margin:4px;font-size:15px}.panel{padding:6px;box-shadow:none}.mainhead{padding:6px;box-shadow:none}.charpad{grid-template-columns:repeat(6,minmax(0,1fr));gap:2px}.charpad button{padding:6px 1px;font-size:12px}.actions button{min-height:32px;margin:3px 1px}.menu button{min-height:32px}.logo{font-size:27px}.fakecrumb{font-size:10px}}
 </style>
 </head>
 <body>
-<header class="top"><div><div class="logo">BRICKWALL</div><div class="tiny">DIGITALE ZUMUTUNG SEIT HEUTE</div></div><div><span class="broken">▧ Logo_final_FINAL_7.png konnte nicht geladen werden</span><br><button id="modeBtn" type="button">Ansicht noch schlimmer machen</button></div></header>
-<div class="fakecrumb">Startseite &gt; Verwaltung &gt; Einstellungen &gt; Erweiterte Einstellungen &gt; Noch weiter &gt; Sie sind hier: Nirgendwo</div>
+<header class="top"><div><div class="logo">BRICKWALL</div><div class="tiny"><blink>*** DIE SCHLECHTESTE SEITE IM WWW *** BEST VIEWED IN NETSCAPE 2.0 ***</blink></div></div><div><span class="broken">▧ Logo_final_FINAL_7.png konnte nicht geladen werden</span><br><button id="modeBtn" type="button">Ansicht noch schlimmer machen</button></div></header>
+<div class="fakecrumb">HOME &gt;&gt; LINKS &gt;&gt; OTHER LINKS &gt;&gt; YOU ARE HERE &gt;&gt; 404?</div>
 <div class="layout">
 <aside class="sidebox">
 <section class="panel"><h2>Navigation™</h2><div class="menu"><button data-view="challenge">▸ 89-Zeichen-Prüfung</button><button data-view="home">▸ Start (vielleicht)</button><button data-view="tasks">▸ Aufgabenverwaltung</button><button data-view="notes">▸ Notizzettelbereich</button><button data-view="settings">▸ Einstellungen der Einstellungen</button><button data-view="help">▸ Hilfe (nicht hilfreich)</button></div></section>
 <section class="panel"><h3>Systemzustand</h3><div class="counter" id="clock">ZEIT WIRD BERECHNET...</div><p class="status">Systemlaune: fragwürdig</p><div class="counter">Offene Aufgaben: <span id="sidebarTaskCount">0</span><br>Bearbeitete Aktionen: <span id="sidebarClickCount">0</span></div><p class="status">Diese Werte werden aus echten Aktionen berechnet.</p></section>
 </aside>
-<main class="brick"><section class="mainhead"><span class="stamp">NICHT ZERTIFIZIERT</span><h1 id="pageTitle">Willkommen im Problem</h1><p id="pageIntro">Diese Benutzeroberfläche wurde mit größter Gleichgültigkeit entworfen. Jeder Klick ist eine kleine Verwaltungsreform. Bitte klicken Sie nicht auf Dinge, die wie Schaltflächen aussehen. Sie sind es wahrscheinlich.</p><div class="actions"><button id="randomBtn">Zufällige Verwaltungsmaßnahme</button><button id="uselessBtn">Speichern ohne Grund</button></div><div id="toast" role="status" aria-live="polite"></div></section>
+<main class="brick"><section class="mainhead"><span class="stamp">NICHT ZERTIFIZIERT</span><h1 id="pageTitle">Willkommen im Problem</h1><p id="pageIntro">Willkommen auf meiner Homepage!!! Diese Seite wurde mit HTML und sehr wenig Geschmack erstellt. Bitte aktualisiere deinen Browser. Auflösung empfohlen: 640 × 480.</p><div class="actions"><button id="randomBtn">Zufällige Verwaltungsmaßnahme</button><button id="uselessBtn">Speichern ohne Grund</button></div><div id="toast" role="status" aria-live="polite"></div></section>
 <div id="view" style="margin-top:12px">
 <section class="panel"><h2>Wichtige Bedienungsaufgabe Nr. 1</h2><p>Füllen Sie das Formular aus, damit wir es ignorieren können.</p><form id="brickForm"><div class="formrow"><label for="username">Benutzername (bitte nicht Ihren Namen)</label><input id="username" name="username" placeholder="z. B. Backstein_404" required maxlength="60"></div><div class="formrow"><label for="department">Zuständige Zuständigkeit</label><select id="department" name="department"><option>Amt für unnötige Dinge</option><option>Abteilung für Backsteinfragen</option><option>Referat zur Prüfung des Referats</option><option>Unbekannt / bitte erneut wählen</option></select></div><div class="formrow"><label for="message">Begründung für die Begründung</label><textarea id="message" name="message" rows="3" placeholder="Hier nichts Wichtiges eintragen"></textarea></div><div class="actions"><button type="submit">Formular unverbindlich verbindlich einreichen</button><button type="reset">Alles löschen (auch Ihre Hoffnung)</button></div></form></section>
 <div class="uglygrid"><section class="panel"><h3>Aufgabenstatus</h3><p id="taskStatus">0 Aufgaben wurden nicht erledigt.</p><button id="addTask">Aufgabe hinzufügen</button><button id="clearTasks">Alle Aufgaben komplizieren</button></section><section class="panel"><h3>Wichtige Statistik</h3><div class="counter">Klicks: <span id="clickCount">0</span><br>Produktivität: 0,03 %<br>Backsteine: wahrscheinlich</div><button id="countBtn">Statistik aktualisieren</button></section></div>
@@ -79,7 +76,7 @@ input[type=checkbox]{width:20px;height:20px;accent-color:var(--brick);vertical-a
 <section class="panel"><h3>Rechtliches</h3><p><small>Alle Knöpfe tun lokal etwas. Es werden keine Formulardaten an einen Server gesendet. Dieser Unsinn speichert nichts dauerhaft.</small></p><button id="legalBtn">Datenschutz-Text öffnen</button></section>
 </aside>
 </div>
-<footer class="footer">BRICKWALL v1.1.0 · Ein Backstein ist auch nur eine sehr schwere UI-Komponente.<br>Kein Konto. Kein Tracking. Keine externen Bibliotheken. Keine vernünftigen Entscheidungen.</footer>
+<footer class="footer">BRICKWALL v0.9 — OPTIMIERT FÜR 640×480 · Ein Backstein ist auch nur eine sehr schwere UI-Komponente.<br>Kein Konto. Kein Tracking. Keine externen Bibliotheken. Keine vernünftigen Entscheidungen.</footer>
 <script>
 (()=>{'use strict';
 const $=s=>document.querySelector(s);
