@@ -31,34 +31,73 @@
 <footer class="footer">BRICKWALL v1.0.0 · Ein Backstein ist auch nur eine sehr schwere UI-Komponente.<br>Kein Konto. Kein Tracking. Keine externen Bibliotheken. Keine vernünftigen Entscheidungen.</footer>
 <script>
 (()=>{'use strict';
-const $=s=>document.querySelector(s);let clicks=0,tasks=0,panic=false;
-const log=(msg)=>{const f=$('#feed'),d=new Date(),line=document.createElement('div');line.textContent='['+d.toLocaleTimeString('de-DE')+'] '+msg;f.prepend(line);while(f.children.length>40)f.lastChild.remove()};
+const $=s=>document.querySelector(s);
+const safeStore={
+ get(key,fallback){try{const v=localStorage.getItem('brickwall:'+key);return v===null?fallback:JSON.parse(v)}catch{return fallback}},
+ set(key,value){try{localStorage.setItem('brickwall:'+key,JSON.stringify(value));return true}catch{return false}}
+};
+let clicks=0,panic=false;
+let tasks=safeStore.get('tasks',[]);
+let notes=safeStore.get('notes','');
+let records=safeStore.get('records',[]);
+const log=msg=>{const f=$('#feed'),line=document.createElement('div');line.textContent='['+new Date().toLocaleTimeString('de-DE')+'] '+msg;f.prepend(line);while(f.children.length>40)f.lastChild.remove()};
 const toast=msg=>{$('#toast').textContent=msg;log(msg)};
 const bump=()=>{$('#clickCount').textContent=String(++clicks)};
+const persistTasks=()=>{safeStore.set('tasks',tasks);$('#taskStatus').textContent=tasks.length+' Aufgaben offen.';renderTasks()};
+const renderTasks=()=>{const list=$('#taskList');if(!list)return;list.replaceChildren();if(!tasks.length){const p=document.createElement('p');p.textContent='Keine offenen Aufgaben. Ein seltenes Wunder.';list.append(p);return}tasks.forEach((t,i)=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:8px;align-items:center;margin:7px 0;overflow-wrap:anywhere';const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!t.done;cb.setAttribute('aria-label','Aufgabe erledigt');cb.addEventListener('change',()=>{tasks[i].done=cb.checked;safeStore.set('tasks',tasks);renderTasks();toast(cb.checked?'Aufgabe als erledigt markiert.':'Aufgabe wieder geöffnet.');bump()});const label=document.createElement('span');label.textContent=t.text;label.style.textDecoration=t.done?'line-through':'none';label.style.flex='1';const del=document.createElement('button');del.type='button';del.textContent='Löschen';del.addEventListener('click',()=>{tasks.splice(i,1);persistTasks();toast('Aufgabe wirklich gelöscht.');bump()});row.append(cb,label,del);list.append(row)})};
 const pages={
-home:['Willkommen im Problem','Die Startseite wurde sorgfältig unorganisiert.'],
-tasks:['Aufgabenverwaltung der Unvernunft','Eine Aufgabe ist ein Problem mit einem hübschen Namen.'],
-notes:['Notizzettelbereich','Schreiben Sie eine Notiz. Sie bleibt nur so lange hier, wie diese Seite geöffnet ist.'],
-settings:['Einstellungen der Einstellungen','Hier können Sie die Oberfläche verändern, ohne dass dadurch irgendetwas besser wird.'],
-help:['Hilfe (nicht hilfreich)','Haben Sie schon versucht, die Seite zu schließen und sich einen Backstein anzusehen?']
+ home:['Willkommen im Problem','Die Startseite wurde sorgfältig unorganisiert.'],
+ tasks:['Aufgabenverwaltung der Unvernunft','Hier lassen sich Aufgaben tatsächlich hinzufügen, abhaken und löschen.'],
+ notes:['Notizzettelbereich','Notizen werden lokal auf diesem Gerät gespeichert.'],
+ settings:['Einstellungen der Einstellungen','Die Einstellungen funktionieren jetzt tatsächlich.'],
+ help:['Hilfe (ausnahmsweise hilfreich)','Die Bedienelemente reagieren. Formulardaten bleiben auf diesem Gerät.']
 };
-document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{const p=pages[b.dataset.view];$('#pageTitle').textContent=p[0];$('#pageIntro').textContent=p[1];bump();toast('Navigation erfolgreich fehlgeleitet: '+p[0]);if(b.dataset.view==='notes')$('#view').innerHTML='<section class="panel"><h2>Temporäre Notiz</h2><label for="note">Notiz, die nirgendwo gespeichert wird</label><textarea id="note" rows="5" style="width:100%" placeholder="Vergessen Sie nicht, diese Notiz zu vergessen"></textarea><p class="status">Hinweis: Aktualisieren löscht diesen Text.</p></section>';if(b.dataset.view==='settings')$('#view').innerHTML='<section class="panel"><h2>Unübersichtliche Einstellungen</h2><label><input type="checkbox" id="annoy"> Extra nervige Hinweise anzeigen</label><p><label for="brickLevel">Backstein-Level (keine Wirkung)</label><input id="brickLevel" type="range" min="1" max="11" value="7"></p><button id="applySettings">Einstellungen übernehmen und ignorieren</button></section>';if(b.dataset.view==='help')$('#view').innerHTML='<section class="panel"><h2>Hilfeartikel 0001</h2><p>1. Klicken Sie auf Hilfe. 2. Sie sind jetzt hier. 3. Der Vorgang ist abgeschlossen.</p><button id="helpAgain">Weitere Hilfe zu Hilfe</button></section>';if(b.dataset.view==='tasks')$('#view').innerHTML='<section class="panel"><h2>Aufgabenverwaltung</h2><p>Verwenden Sie „Aufgabe hinzufügen“ rechts neben der Hauptansicht. Das ist nicht hier. Natürlich nicht.</p><button id="addTask2">Aufgabe hinzufügen</button></section>';if(b.dataset.view==='home')location.reload()}));
-$('#view').addEventListener('click',e=>{if(e.target.id==='applySettings'){toast('Einstellungen wurden ordnungsgemäß nicht übernommen');bump()}if(e.target.id==='helpAgain'){toast('Die Hilfe benötigt jetzt selbst Hilfe');bump()}if(e.target.id==='addTask2'){tasks++;$('#taskStatus').textContent=tasks+' Aufgaben wurden nicht erledigt.';toast('Aufgabe hinzugefügt, Sinn nicht gefunden');bump()}});
-$('#brickForm').addEventListener('submit',e=>{e.preventDefault();bump();toast('Formular angenommen. Es wurde lokal verworfen.');$('#brickForm').reset()});
-$('#brickForm').addEventListener('reset',()=>{setTimeout(()=>log('Formularinhalt zurückgesetzt.'),0)});
+function renderPage(key){
+ const p=pages[key]||pages.home;$('#pageTitle').textContent=p[0];$('#pageIntro').textContent=p[1];
+ const view=$('#view');view.replaceChildren();
+ if(key==='home'){
+ const form=$('#brickForm').closest('.panel');view.append(form);
+ const grid=document.createElement('div');grid.className='uglygrid';
+ grid.innerHTML='<section class="panel"><h3>Aufgabenstatus</h3><p id="taskStatus"></p><button id="addTask">Aufgabe hinzufügen</button><button id="clearTasks">Erledigte löschen</button></section><section class="panel"><h3>Wichtige Statistik</h3><div class="counter">Klicks: <span id="clickCount">0</span><br>Produktivität: 0,03 %<br>Backsteine: wahrscheinlich</div><button id="countBtn">Statistik aktualisieren</button></section>';
+ view.append(grid);wireHome();persistTasks();$('#clickCount').textContent=String(clicks);
+ } else if(key==='tasks'){
+ view.innerHTML='<section class="panel"><h2>Aufgabenverwaltung</h2><form id="taskForm"><label for="taskInput">Neue Aufgabe</label><div class="actions"><input id="taskInput" required maxlength="120" placeholder="Eine Aufgabe, die wirklich existiert"><button type="submit">Hinzufügen</button></div></form><p id="taskStatus"></p><div id="taskList"></div><button id="clearTasks">Erledigte Aufgaben löschen</button></section>';
+ $('#taskForm').addEventListener('submit',e=>{e.preventDefault();const value=$('#taskInput').value.trim();if(!value)return;tasks.push({text:value,done:false});persistTasks();$('#taskInput').value='';toast('Aufgabe gespeichert.');bump()});
+ $('#clearTasks').addEventListener('click',()=>{tasks=tasks.filter(t=>!t.done);persistTasks();toast('Erledigte Aufgaben gelöscht.');bump()});persistTasks();
+ }else if(key==='notes'){
+ view.innerHTML='<section class="panel"><h2>Notizen</h2><label for="note">Notiztext</label><textarea id="note" rows="7" style="width:100%" placeholder="Hier etwas Sinnvolles schreiben"></textarea><div class="actions"><button id="saveNote">Notiz speichern</button><button id="clearNote">Notiz löschen</button></div><p id="noteStatus"></p></section>';
+ $('#note').value=notes;$('#noteStatus').textContent='Notiz wird lokal gespeichert.';
+ $('#saveNote').addEventListener('click',()=>{notes=$('#note').value;const ok=safeStore.set('notes',notes);$('#noteStatus').textContent=ok?'Notiz auf diesem Gerät gespeichert.':'Speichern blockiert. Notiz bleibt nur bis zum Neuladen.';toast('Notiz gespeichert.');bump()});
+ $('#clearNote').addEventListener('click',()=>{notes='';$('#note').value='';safeStore.set('notes','');$('#noteStatus').textContent='Notiz gelöscht.';toast('Notiz gelöscht.');bump()});
+ }else if(key==='settings'){
+ view.innerHTML='<section class="panel"><h2>Einstellungen</h2><label for="brickLevel">Backstein-Level: <span id="levelText">7</span></label><input id="brickLevel" type="range" min="1" max="11" value="'+safeStore.get('level',7)+'" style="width:100%"><p><label><input type="checkbox" id="annoy" '+(safeStore.get('annoy',false)?'checked':'')+'> Extra nervige Hinweise anzeigen</label></p><div class="actions"><button id="applySettings">Einstellungen speichern</button><button id="resetSettings">Standard wiederherstellen</button></div><p id="settingsStatus"></p></section>';
+ $('#brickLevel').addEventListener('input',()=>$('#levelText').textContent=$('#brickLevel').value);
+ $('#applySettings').addEventListener('click',()=>{safeStore.set('level',Number($('#brickLevel').value));safeStore.set('annoy',$('#annoy').checked);document.body.style.setProperty('--brick',$('#annoy').checked?'#b32f21':'#8c3f2b');$('#settingsStatus').textContent='Einstellungen auf diesem Gerät gespeichert.';toast('Einstellungen übernommen.');bump()});
+ $('#resetSettings').addEventListener('click',()=>{safeStore.set('level',7);safeStore.set('annoy',false);renderPage('settings');toast('Standardeinstellungen wiederhergestellt.');bump()});
+ }else{
+ view.innerHTML='<section class="panel"><h2>Hilfeartikel 0001</h2><p>Aufgaben lassen sich hinzufügen, abhaken und löschen. Notizen und Einstellungen werden im lokalen Browser gespeichert. Das Formular zeigt eine Bestätigung und speichert die Eingabe lokal. Es wird nichts an einen Server gesendet.</p><button id="helpAgain">Hilfe erneut anzeigen</button></section>';
+ $('#helpAgain').addEventListener('click',()=>{toast('Sie sind bereits in der Hilfe.');bump()});
+ }
+}
+function wireHome(){
+ $('#brickForm').addEventListener('submit',e=>{e.preventDefault();const data={name:$('#username').value.trim(),department:$('#department').value,message:$('#message').value.trim(),date:new Date().toLocaleString('de-DE')};records.push(data);const ok=safeStore.set('records',records);toast(ok?'Formular lokal gespeichert. Es wurde nichts versendet.':'Formular verarbeitet, aber lokales Speichern ist blockiert.');$('#brickForm').reset();bump()});
+ $('#brickForm').addEventListener('reset',()=>{setTimeout(()=>log('Formularinhalt zurückgesetzt.'),0)});
+ $('#addTask').addEventListener('click',()=>{const text=prompt('Wie soll die Aufgabe heißen?');if(text&&text.trim()){tasks.push({text:text.trim().slice(0,120),done:false});persistTasks();toast('Aufgabe hinzugefügt.');bump()}});
+ $('#clearTasks').addEventListener('click',()=>{tasks=tasks.filter(t=>!t.done);persistTasks();toast('Erledigte Aufgaben gelöscht.');bump()});
+ $('#countBtn').addEventListener('click',()=>{bump();toast('Klickstatistik aktualisiert.')});
+}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{bump();renderPage(b.dataset.view);toast('Ansicht geöffnet: '+(pages[b.dataset.view]||pages.home)[0])}));
 $('#randomBtn').addEventListener('click',()=>{bump();const msgs=['Bitte zuerst das Formular schließen, das Sie nicht geöffnet haben.','Fehler 418: Ich bin ein Backstein.','Ihre Anfrage wurde an die Abteilung für unnötige Dinge weitergeleitet.','Bitte warten Sie, während nichts passiert.','Zugriff verweigert: Sie haben Zugriff.'];toast(msgs[Math.floor(Math.random()*msgs.length)])});
-$('#uselessBtn').addEventListener('click',()=>{bump();toast('Gespeichert! (Nein.)');});
-$('#addTask').addEventListener('click',()=>{tasks++;$('#taskStatus').textContent=tasks+' Aufgaben wurden nicht erledigt.';bump();log('Eine Aufgabe wurde fachgerecht hinzugefügt.')});
-$('#clearTasks').addEventListener('click',()=>{tasks=0;$('#taskStatus').textContent='0 Aufgaben wurden nicht erledigt.';bump();toast('Alle Aufgaben wurden neu kompliziert.')});
-$('#countBtn').addEventListener('click',()=>{bump();toast('Statistik wurde aktualisiert, Zahlen bleiben gleich.')});
-$('#helpBtn').addEventListener('click',()=>{bump();$('#supportText').textContent='Support: Bitte wenden Sie sich an den Support.';toast('Support-Anfrage an den Support weitergeleitet.')});
-$('#ticketBtn').addEventListener('click',()=>{bump();log('Lokales Ticket #BW-'+String(clicks).padStart(4,'0')+' erstellt.');$('#supportText').textContent='Ticket #BW-'+String(clicks).padStart(4,'0')+' existiert nur in dieser Sitzung.';toast('Ticket erstellt. Es verschwindet beim Neuladen.')});
-$('#panicBtn').addEventListener('click',()=>{panic=!panic;document.body.classList.toggle('hardmode',panic);bump();toast(panic?'PANIKMODUS AKTIV. Alles ist jetzt noch unpraktischer.':'Panikmodus deaktiviert. Ein kleines bisschen Frieden.')});
-$('#legalBtn').addEventListener('click',()=>{bump();alert('BRICKWALL speichert keine Daten dauerhaft und sendet keine Formulare. Alle Funktionen laufen lokal in Ihrem Browser.')});
+$('#uselessBtn').addEventListener('click',()=>{const ok=safeStore.set('lastSave',new Date().toISOString());bump();toast(ok?'Gespeichert: Sitzungsstatus gesichert.':'Browser blockiert das Speichern.')});
+$('#helpBtn').addEventListener('click',()=>{bump();renderPage('help');toast('Hilfe geöffnet.')});
+$('#ticketBtn').addEventListener('click',()=>{bump();const id='BW-'+String(Date.now()).slice(-6);records.push({ticket:id,date:new Date().toLocaleString('de-DE'),status:'Lokal erstellt'});safeStore.set('records',records);$('#supportText').textContent='Ticket '+id+' wurde lokal erstellt.';toast('Ticket erstellt: '+id)});
+$('#panicBtn').addEventListener('click',()=>{panic=!panic;document.body.classList.toggle('hardmode',panic);bump();toast(panic?'Panikmodus aktiviert.':'Panikmodus deaktiviert.')});
+$('#legalBtn').addEventListener('click',()=>{bump();alert('BRICKWALL speichert Aufgaben, Notizen, Einstellungen und Formular-Einträge nur lokal in diesem Browser. Es werden keine Daten an einen Server gesendet.')});
 $('#modeBtn').addEventListener('click',()=>{panic=!panic;document.body.classList.toggle('hardmode',panic);$('#modeBtn').textContent=panic?'Wieder etwas weniger schlimm':'Ansicht noch schlimmer machen';bump();log('Darstellung umgestellt.')});
-$('#clock').textContent='SESSION '+Math.random().toString(36).slice(2,8).toUpperCase();
-setInterval(()=>{$('#clock').textContent=new Date().toLocaleTimeString('de-DE')+' · ZEITVERSCHWENDUNG';},1000);
-log('BRICKWALL wurde mit zweifelhafter Kompetenz gestartet.');
+$('#clock').textContent=new Date().toLocaleTimeString('de-DE')+' · ZEITVERSCHWENDUNG';
+setInterval(()=>{$('#clock').textContent=new Date().toLocaleTimeString('de-DE')+' · ZEITVERSCHWENDUNG'},1000);
+log('BRICKWALL gestartet. Funktionen initialisiert.');
+renderPage('home');
 })();
 </script>
 </body></html>
