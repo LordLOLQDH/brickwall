@@ -5,8 +5,59 @@
 <meta name="theme-color" content="#6d4c32"><meta name="description" content="BRICKWALL — eine absichtlich abscheuliche Backstein-Benutzeroberfläche.">
 <title>BRICKWALL :: Bedienung auf eigene Gefahr</title>
 <style>
-:root{--brick:#8c3f2b;--mortar:#d5c4a1;--dark:#211b17;--paper:#e6d8bd;--warning:#f3df37}
-*{box-sizing:border-box}html{background:#463329}body{margin:0;color:#201813;font-family:"Comic Sans MS","Papyrus",fantasy;background:repeating-linear-gradient(0deg,transparent 0 38px,#39281e 39px 43px),repeating-linear-gradient(90deg,#a9573b 0 74px,#39281e 75px 80px,#ba6846 81px 149px,#39281e 150px 155px);background-color:#9e5138;min-height:100vh}button,input,textarea,select{font:inherit;color:#211813;border:4px ridge #8b7b61;border-radius:0;background:#e7d6b6;box-shadow:4px 4px 0 #261b14;padding:9px;max-width:100%}button{cursor:pointer}button:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 #261b14;background:#fff0b8}button:focus,input:focus,textarea:focus,select:focus{outline:4px dotted #ffed00;outline-offset:2px}.top{background:#1d1714;color:#f4e4c4;padding:12px;border-bottom:8px double #ad6243;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.logo{font-family:Impact,sans-serif;font-size:clamp(1.7rem,6vw,3rem);letter-spacing:5px;color:#ffcf7a;text-shadow:4px 4px #7e2418,-2px -2px #ddd}.tiny{font-size:10px;letter-spacing:3px}.layout{max-width:1400px;margin:18px auto;padding:10px;display:grid;grid-template-columns:220px minmax(0,1fr) 240px;gap:12px}.brick{border:8px ridge #b67a4c;outline:2px dashed #2a1a11;background:repeating-linear-gradient(0deg,#b66b4c 0 30px,#4b3024 31px 35px,#a75b40 36px 66px);padding:10px;box-shadow:9px 9px 0 #201510}.panel{background:var(--paper);border:5px groove #b9a17b;padding:12px;margin-bottom:12px;box-shadow:inset 0 0 0 3px #e9d6b1}.panel h2,.panel h3{margin:0 0 12px;text-transform:uppercase;text-decoration:underline wavy #a33}.panel h2{font-size:1.2rem}.panel h3{font-size:1rem}.menu{display:grid;gap:9px}.menu button{width:100%;text-align:left;font-size:.85rem}.mainhead{background:#1c1714;color:#fff0cc;padding:16px;border:6px double #bd8154;transform:rotate(-.25deg)}.mainhead h1{font-family:Impact,sans-serif;font-size:clamp(1.8rem,5vw,3.5rem);margin:0;text-shadow:3px 3px #b33}.mainhead p{line-height:1.8}.stamp{display:inline-block;border:3px dashed #a32217;color:#a32217;padding:4px 8px;transform:rotate(-5deg);font-weight:bold}.formrow{display:grid;gap:6px;margin:12px 0}.formrow input,.formrow textarea,.formrow select{width:100%}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.counter{font-family:monospace;background:#211a16;color:#b9ff80;padding:10px;overflow-wrap:anywhere}.notice{background:#f3df37;border:4px dotted #8a2b16;padding:10px;font-weight:bold;animation:blink 3s infinite}@keyframes blink{0%,90%,100%{filter:none}94%{filter:invert(1)}}.feed{max-height:170px;overflow:auto;border:3px inset #8b7b61;background:#f3e4c8;padding:7px;font-family:monospace;font-size:.8rem}.meter{height:22px;border:3px inset #5b4636;background:repeating-linear-gradient(90deg,#b33 0 10px,#f5d44d 10px 20px,#568447 20px 30px)}.meter span{display:block;height:100%;width:78%;background:repeating-linear-gradient(45deg,#a33 0 8px,#efc7a3 8px 16px)}.footer{background:#1e1713;color:#ddc8a6;text-align:center;padding:18px;border-top:7px double #a96845;font-size:.75rem}.broken{display:inline-block;background:#ddd;color:#333;border:1px solid #777;padding:3px;font:11px Arial}.sidebox{min-width:0}.history{display:grid;gap:6px}.history button{font-size:.8rem}.fakecrumb{font-size:.75rem;background:#c4ad87;padding:6px;word-break:break-word}.uglygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.uglygrid .panel{margin:0}.status{font-size:.75rem;color:#4c3826}.hardmode{filter:contrast(1.25) saturate(.6)}body.hardmode button{letter-spacing:2px}body.hardmode .panel{border-style:dotted}#toast{min-height:24px;font-weight:bold;color:#8c1d11}.charpad{display:grid;grid-template-columns:repeat(auto-fit,minmax(40px,1fr));gap:5px;margin:10px 0}.charpad button{padding:7px 3px;min-width:0}.selected-char{font:1.2rem monospace;min-height:42px;background:#211a16;color:#b9ff80;padding:9px;overflow-wrap:anywhere}.challenge-box{border:5px ridge #8c3f2b;background:#dfcfad;padding:12px;margin:10px 0}.challenge-box input[type=text]{width:100%;font-family:monospace}.challenge-progress{height:18px;border:3px inset #74614a;background:#ddd;margin:8px 0}.challenge-progress span{display:block;height:100%;background:repeating-linear-gradient(45deg,#8c3f2b 0 8px,#d3a17b 8px 16px)}.rule-list{font-family:monospace;font-size:.85rem;padding-left:20px}.rule-list li{margin:5px 0}.charpad button:disabled{opacity:.45;cursor:not-allowed}@media(max-width:900px){{.layout{grid-template-columns:1fr}.sidebox{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.sidebox .panel{margin:0}.mainhead{transform:none}}@media(max-width:430px){.layout{padding:5px;margin:6px auto}.brick{padding:6px;box-shadow:4px 4px 0 #201510}.uglygrid{grid-template-columns:1fr}.top{align-items:flex-start}.logo{letter-spacing:2px}}
+:root{--brick:#a74432;--brick-dark:#702b23;--mortar:#ead8bd;--paper:#fff4df;--ink:#29231e;--yellow:#ffcf4a;--green:#47784c}
+*{box-sizing:border-box;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+html{background:var(--mortar);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:"Courier New",monospace;background-color:var(--mortar);background-image:linear-gradient(transparent 95%,#c5a98b 95%),linear-gradient(90deg,transparent 95%,#c5a98b 95%);background-size:100% 46px,90px 46px;background-position:0 0,45px 0}
+button,input,textarea,select{font:inherit;max-width:100%;border-radius:0}
+button{font-weight:bold;font-size:14px;padding:12px 15px;cursor:pointer;color:white;background:var(--brick);border:3px solid var(--brick-dark);box-shadow:4px 4px 0 #3f241d;transition:transform .08s;touch-action:manipulation}
+button:active{transform:translate(3px,3px);box-shadow:1px 1px 0 #3f241d}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.secondary{background:#51473c;border-color:#302820}
+button.yellow{color:#302820;background:var(--yellow);border-color:#8a6412}
+button.green{background:var(--green);border-color:#244729}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px dashed #1557a5;outline-offset:3px}
+header.top{display:block;background:var(--brick-dark);color:white;padding:18px;border-bottom:8px solid var(--brick);text-align:center}
+.logo{font-family:"Courier New",monospace;font-size:clamp(25px,6vw,45px);font-weight:1000;letter-spacing:4px;text-shadow:3px 3px #38201b;color:white}
+.tagline,.tiny{font-size:11px;letter-spacing:2px;margin-top:8px}
+.top>div:last-child{margin-top:12px}
+.fakecrumb{font-size:11px;background:#cbb492;padding:8px;overflow-wrap:anywhere}
+.layout{width:min(760px,94%);margin:24px auto;padding:0;display:flex;flex-direction:column;gap:14px}
+.layout>aside:first-child{order:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.layout>main{order:1;min-width:0}
+.layout>aside:last-child{order:3;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.sidebox{min-width:0}.sidebox>.panel{margin:0}
+.brick{padding:0;border:0;outline:0;background:transparent;box-shadow:none}
+.panel{min-width:0;background:var(--paper);border:5px solid var(--brick-dark);padding:22px;margin-bottom:14px;box-shadow:9px 9px 0 #7d6551;overflow-wrap:anywhere}
+.panel h2,.panel h3{margin-top:0}
+.panel h2{font-size:20px}.panel h3{font-size:17px}
+.mainhead{background:var(--brick-dark);color:white;padding:20px;border:5px solid var(--brick);box-shadow:9px 9px 0 #7d6551;transform:none}
+.mainhead h1{font-size:clamp(24px,5vw,36px);margin:12px 0}
+.mainhead p{line-height:1.6}
+.stamp{display:inline-block;border:2px dashed var(--yellow);color:var(--yellow);padding:4px 8px;font-weight:bold;font-size:12px}
+.formrow{display:grid;gap:7px;margin:14px 0}.formrow input,.formrow textarea,.formrow select{width:100%;border:3px solid var(--brick-dark);padding:12px;background:white;color:var(--ink)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.actions button{flex:0 1 auto}
+.counter{font-family:monospace;background:#29231e;color:#d6f5a4;padding:10px;overflow-wrap:anywhere}
+.notice,.warning{padding:12px;background:#f3d58b;border:2px dashed #8d5d20;margin:15px 0;font-size:12px;line-height:1.7;color:var(--ink)}
+.feed{max-height:170px;overflow:auto;border:3px inset #ad9478;background:white;padding:9px;font-family:monospace;font-size:12px}
+.status{font-size:12px;line-height:1.6;color:#4c3826}.footer{background:var(--brick-dark);color:#fff4df;text-align:center;padding:25px 12px;font-size:11px;line-height:1.8;border-top:8px solid var(--brick)}
+.broken{display:inline-block;background:#eee;color:#333;border:1px solid #777;padding:3px;font:11px Arial}
+.menu{display:grid;gap:9px}.menu button{width:100%;text-align:left;font-size:13px}
+.uglygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.uglygrid .panel{margin:0}
+#toast{min-height:24px;font-weight:bold;color:#ffcf4a;overflow-wrap:anywhere}
+.charpad{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin:10px 0}
+.charpad button{padding:10px 2px;min-width:0;background:#f3dfbd;color:var(--ink);border-color:#917456;box-shadow:2px 2px #59402e;overflow:hidden}
+.charpad button:active{background:var(--yellow)}
+.selected-char{font:13px monospace;min-height:42px;background:#f4e9d6;border:2px inset #ad9478;padding:10px;overflow-wrap:anywhere;word-break:break-all;margin:8px 0}
+.challenge-box{border:3px solid var(--brick-dark);background:#fff9eb;padding:14px;margin:14px 0;min-width:0}
+.challenge-progress{height:22px;border:3px solid var(--brick-dark);background:#c5b8a5;margin:12px 0;overflow:hidden}
+.challenge-progress span{display:block;height:100%;background:repeating-linear-gradient(45deg,#e0a72b,#e0a72b 10px,#ffdc70 10px,#ffdc70 20px);transition:width .2s}
+.rule-list{font:12px/1.6 monospace;padding-left:22px}.rule-list li{margin:5px 0}
+#view{min-width:0}#view .panel{margin-bottom:12px}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--brick);vertical-align:middle}
+.hardmode{filter:contrast(1.1) saturate(.7)}body.hardmode button{letter-spacing:1px}body.hardmode .panel{border-style:double}
+@media(min-width:1050px){.layout{width:min(1000px,94%);display:grid;grid-template-columns:200px minmax(0,1fr) 200px;align-items:start;gap:14px}.layout>aside:first-child,.layout>main,.layout>aside:last-child{order:initial;display:block}.layout>aside .panel{margin-bottom:14px}.layout>aside:first-child .panel,.layout>aside:last-child .panel{padding:14px}.layout>main{min-width:0}}
+@media(max-width:520px){.layout{width:calc(100% - 16px);margin:12px auto;gap:10px}.panel{padding:14px;box-shadow:5px 5px 0 #7d6551}.mainhead{padding:14px;box-shadow:5px 5px 0 #7d6551}.uglygrid{grid-template-columns:1fr}.charpad{grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}.charpad button{padding:10px 1px;font-size:13px}.actions{gap:8px}.actions button{flex:1 1 140px;min-height:44px}.menu button{min-height:44px}.logo{letter-spacing:2px}.fakecrumb{font-size:10px}}
 </style>
 </head>
 <body>
@@ -15,7 +66,7 @@
 <div class="layout">
 <aside class="sidebox">
 <section class="panel"><h2>Navigation™</h2><div class="menu"><button data-view="challenge">▸ 89-Zeichen-Prüfung</button><button data-view="home">▸ Start (vielleicht)</button><button data-view="tasks">▸ Aufgabenverwaltung</button><button data-view="notes">▸ Notizzettelbereich</button><button data-view="settings">▸ Einstellungen der Einstellungen</button><button data-view="help">▸ Hilfe (nicht hilfreich)</button></div></section>
-<section class="panel"><h3>Systemzustand</h3><div class="counter" id="clock">ZEIT WIRD BERECHNET...</div><p class="status">Systemlaune: fragwürdig</p><div class="meter"><span></span></div><p><small>Fortschritt: 78 % (wobei?)</small></p></section>
+<section class="panel"><h3>Systemzustand</h3><div class="counter" id="clock">ZEIT WIRD BERECHNET...</div><p class="status">Systemlaune: fragwürdig</p><div class="counter">Offene Aufgaben: <span id="sidebarTaskCount">0</span><br>Bearbeitete Aktionen: <span id="sidebarClickCount">0</span></div><p class="status">Diese Werte werden aus echten Aktionen berechnet.</p></section>
 </aside>
 <main class="brick"><section class="mainhead"><span class="stamp">NICHT ZERTIFIZIERT</span><h1 id="pageTitle">Willkommen im Problem</h1><p id="pageIntro">Diese Benutzeroberfläche wurde mit größter Gleichgültigkeit entworfen. Jeder Klick ist eine kleine Verwaltungsreform. Bitte klicken Sie nicht auf Dinge, die wie Schaltflächen aussehen. Sie sind es wahrscheinlich.</p><div class="actions"><button id="randomBtn">Zufällige Verwaltungsmaßnahme</button><button id="uselessBtn">Speichern ohne Grund</button></div><div id="toast" role="status" aria-live="polite"></div></section>
 <div id="view" style="margin-top:12px">
@@ -28,7 +79,7 @@
 <section class="panel"><h3>Rechtliches</h3><p><small>Alle Knöpfe tun lokal etwas. Es werden keine Formulardaten an einen Server gesendet. Dieser Unsinn speichert nichts dauerhaft.</small></p><button id="legalBtn">Datenschutz-Text öffnen</button></section>
 </aside>
 </div>
-<footer class="footer">BRICKWALL v1.0.0 · Ein Backstein ist auch nur eine sehr schwere UI-Komponente.<br>Kein Konto. Kein Tracking. Keine externen Bibliotheken. Keine vernünftigen Entscheidungen.</footer>
+<footer class="footer">BRICKWALL v1.1.0 · Ein Backstein ist auch nur eine sehr schwere UI-Komponente.<br>Kein Konto. Kein Tracking. Keine externen Bibliotheken. Keine vernünftigen Entscheidungen.</footer>
 <script>
 (()=>{'use strict';
 const $=s=>document.querySelector(s);
@@ -42,8 +93,8 @@ let notes=safeStore.get('notes','');
 let records=safeStore.get('records',[]);
 const log=msg=>{const f=$('#feed'),line=document.createElement('div');line.textContent='['+new Date().toLocaleTimeString('de-DE')+'] '+msg;f.prepend(line);while(f.children.length>40)f.lastChild.remove()};
 const toast=msg=>{$('#toast').textContent=msg;log(msg)};
-const bump=()=>{$('#clickCount').textContent=String(++clicks)};
-const persistTasks=()=>{safeStore.set('tasks',tasks);$('#taskStatus').textContent=tasks.length+' Aufgaben offen.';renderTasks()};
+const bump=()=>{$('#clickCount').textContent=String(++clicks);const a=$('#sidebarClickCount');if(a)a.textContent=String(clicks)};
+const persistTasks=()=>{safeStore.set('tasks',tasks);const s=$('#taskStatus');if(s)s.textContent=tasks.filter(t=>!t.done).length+' Aufgaben offen.';const side=$('#sidebarTaskCount');if(side)side.textContent=String(tasks.filter(t=>!t.done).length);renderTasks()};
 const renderTasks=()=>{const list=$('#taskList');if(!list)return;list.replaceChildren();if(!tasks.length){const p=document.createElement('p');p.textContent='Keine offenen Aufgaben. Ein seltenes Wunder.';list.append(p);return}tasks.forEach((t,i)=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:8px;align-items:center;margin:7px 0;overflow-wrap:anywhere';const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!t.done;cb.setAttribute('aria-label','Aufgabe erledigt');cb.addEventListener('change',()=>{tasks[i].done=cb.checked;safeStore.set('tasks',tasks);renderTasks();toast(cb.checked?'Aufgabe als erledigt markiert.':'Aufgabe wieder geöffnet.');bump()});const label=document.createElement('span');label.textContent=t.text;label.style.textDecoration=t.done?'line-through':'none';label.style.flex='1';const del=document.createElement('button');del.type='button';del.textContent='Löschen';del.addEventListener('click',()=>{tasks.splice(i,1);persistTasks();toast('Aufgabe wirklich gelöscht.');bump()});row.append(cb,label,del);list.append(row)})};
 document.addEventListener('copy',e=>{if(document.querySelector('#passPad'))e.preventDefault()});
 document.addEventListener('cut',e=>{if(document.querySelector('#passPad'))e.preventDefault()});
@@ -189,7 +240,7 @@ $('#ticketBtn').addEventListener('click',()=>{bump();const id='BW-'+String(Date.
 $('#panicBtn').addEventListener('click',()=>{panic=!panic;document.body.classList.toggle('hardmode',panic);bump();toast(panic?'Panikmodus aktiviert.':'Panikmodus deaktiviert.')});
 $('#legalBtn').addEventListener('click',()=>{bump();alert('BRICKWALL speichert Aufgaben, Notizen, Einstellungen und Formular-Einträge nur lokal in diesem Browser. Es werden keine Daten an einen Server gesendet.')});
 $('#modeBtn').addEventListener('click',()=>{panic=!panic;document.body.classList.toggle('hardmode',panic);$('#modeBtn').textContent=panic?'Wieder etwas weniger schlimm':'Ansicht noch schlimmer machen';bump();log('Darstellung umgestellt.')});
-$('#clock').textContent=new Date().toLocaleTimeString('de-DE')+' · ZEITVERSCHWENDUNG';
+$('#clock').textContent=new Date().toLocaleTimeString('de-DE')+' · ZEITVERSCHWENDUNG';const sideTasks=$('#sidebarTaskCount');if(sideTasks)sideTasks.textContent=String(tasks.filter(t=>!t.done).length);const sideClicks=$('#sidebarClickCount');if(sideClicks)sideClicks.textContent=String(clicks);
 setInterval(()=>{$('#clock').textContent=new Date().toLocaleTimeString('de-DE')+' · ZEITVERSCHWENDUNG'},1000);
 log('BRICKWALL gestartet. Funktionen initialisiert.');
 renderPage('challenge');
