@@ -45,6 +45,7 @@ const toast=msg=>{$('#toast').textContent=msg;log(msg)};
 const bump=()=>{$('#clickCount').textContent=String(++clicks)};
 const persistTasks=()=>{safeStore.set('tasks',tasks);$('#taskStatus').textContent=tasks.length+' Aufgaben offen.';renderTasks()};
 const renderTasks=()=>{const list=$('#taskList');if(!list)return;list.replaceChildren();if(!tasks.length){const p=document.createElement('p');p.textContent='Keine offenen Aufgaben. Ein seltenes Wunder.';list.append(p);return}tasks.forEach((t,i)=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:8px;align-items:center;margin:7px 0;overflow-wrap:anywhere';const cb=document.createElement('input');cb.type='checkbox';cb.checked=!!t.done;cb.setAttribute('aria-label','Aufgabe erledigt');cb.addEventListener('change',()=>{tasks[i].done=cb.checked;safeStore.set('tasks',tasks);renderTasks();toast(cb.checked?'Aufgabe als erledigt markiert.':'Aufgabe wieder geöffnet.');bump()});const label=document.createElement('span');label.textContent=t.text;label.style.textDecoration=t.done?'line-through':'none';label.style.flex='1';const del=document.createElement('button');del.type='button';del.textContent='Löschen';del.addEventListener('click',()=>{tasks.splice(i,1);persistTasks();toast('Aufgabe wirklich gelöscht.');bump()});row.append(cb,label,del);list.append(row)})};
+const formPanel=$('#brickForm').closest('.panel');
 const pages={
  home:['Willkommen im Problem','Die Startseite wurde sorgfältig unorganisiert.'],
  tasks:['Aufgabenverwaltung der Unvernunft','Hier lassen sich Aufgaben tatsächlich hinzufügen, abhaken und löschen.'],
@@ -56,7 +57,7 @@ function renderPage(key){
  const p=pages[key]||pages.home;$('#pageTitle').textContent=p[0];$('#pageIntro').textContent=p[1];
  const view=$('#view');view.replaceChildren();
  if(key==='home'){
- const form=$('#brickForm').closest('.panel');view.append(form);
+ view.append(formPanel);
  const grid=document.createElement('div');grid.className='uglygrid';
  grid.innerHTML='<section class="panel"><h3>Aufgabenstatus</h3><p id="taskStatus"></p><button id="addTask">Aufgabe hinzufügen</button><button id="clearTasks">Erledigte löschen</button></section><section class="panel"><h3>Wichtige Statistik</h3><div class="counter">Klicks: <span id="clickCount">0</span><br>Produktivität: 0,03 %<br>Backsteine: wahrscheinlich</div><button id="countBtn">Statistik aktualisieren</button></section>';
  view.append(grid);wireHome();persistTasks();$('#clickCount').textContent=String(clicks);
@@ -80,6 +81,7 @@ function renderPage(key){
  }
 }
 function wireHome(){
+ if($('#brickForm').dataset.wired==='1')return;$('#brickForm').dataset.wired='1';
  $('#brickForm').addEventListener('submit',e=>{e.preventDefault();const data={name:$('#username').value.trim(),department:$('#department').value,message:$('#message').value.trim(),date:new Date().toLocaleString('de-DE')};records.push(data);const ok=safeStore.set('records',records);toast(ok?'Formular lokal gespeichert. Es wurde nichts versendet.':'Formular verarbeitet, aber lokales Speichern ist blockiert.');$('#brickForm').reset();bump()});
  $('#brickForm').addEventListener('reset',()=>{setTimeout(()=>log('Formularinhalt zurückgesetzt.'),0)});
  $('#addTask').addEventListener('click',()=>{const text=prompt('Wie soll die Aufgabe heißen?');if(text&&text.trim()){tasks.push({text:text.trim().slice(0,120),done:false});persistTasks();toast('Aufgabe hinzugefügt.');bump()}});
