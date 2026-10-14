@@ -5,9 +5,9 @@
 <meta name="theme-color" content="#6d4c32"><meta name="description" content="BRICKWALL — eine absichtlich abscheuliche Backstein-Benutzeroberfläche.">
 <title>BRICKWALL :: Bedienung auf eigene Gefahr</title>
 <style>
-/* BRICKWALL 0.9 — absichtlich wie eine vergessene Geocities-Seite */
-html{background:#c0c0c0}
-body{margin:8px;background:#c0c0c0;color:#000;font-family:"Times New Roman",Times,serif;font-size:16px}
+/* BRICKWALL 1.2 — Bedienbarkeit gilt als persönlicher Angriff */
+html{background:repeating-linear-gradient(0deg,#c0c0c0 0 7px,#b7b7b7 7px 8px)}
+body{margin:3px;background:#d0d0d0;color:#080808;font-family:"Comic Sans MS","Times New Roman",serif;font-size:14px;cursor:crosshair}
 *{box-sizing:border-box}
 button,input,textarea,select{font-family:Arial,sans-serif;font-size:13px}
 button{padding:2px 6px;color:buttontext;background:buttonface;border:2px outset buttonborder;border-radius:0;box-shadow:none;cursor:pointer}
@@ -15,8 +15,8 @@ button:active{border-style:inset;transform:none;box-shadow:none}
 button:hover{background:#ddd;transform:none;box-shadow:none}
 button:disabled{opacity:.5}
 a{color:#00e;text-decoration:underline}a:visited{color:#551a8b}
-header.top{display:block;padding:3px;background:#000080;color:#fff;border:3px ridge #aaa;text-align:center}
-.logo{font-family:"Times New Roman",serif;font-size:32px;font-weight:bold;letter-spacing:0;text-shadow:none;color:#ffff00}
+header.top{display:block;padding:2px;background:linear-gradient(90deg,#ff00ff,#ffff00,#00ffff,#ff0000);color:#fff;border:7px ridge #ff00ff;text-align:center;outline:4px dashed lime}
+.logo{font-family:"Comic Sans MS",fantasy;font-size:38px;font-weight:bold;letter-spacing:4px;text-shadow:3px 3px #ff0000,-2px -2px #00ff00;color:#ffff00;transform:rotate(-1deg)}
 .tagline,.tiny{font-family:"Courier New",monospace;font-size:11px;letter-spacing:0;margin-top:2px}
 .top>div:last-child{margin-top:3px}
 .fakecrumb{font:12px "Times New Roman",serif;background:#ffffcc;border:1px solid #808080;padding:2px;margin:4px 0}
@@ -25,24 +25,24 @@ header.top{display:block;padding:3px;background:#000080;color:#fff;border:3px ri
 .sidebox{display:block;min-width:0}
 .sidebox>.panel{margin:5px 0}
 .brick{padding:0;border:0;outline:0;background:transparent;box-shadow:none}
-.panel{min-width:0;background:#eee;border:2px ridge #999;padding:8px;margin:5px 0;box-shadow:none;overflow-wrap:anywhere}
+.panel{min-width:0;background:repeating-linear-gradient(135deg,#eee 0 9px,#e5e5e5 9px 10px);border:5px ridge #ff00ff;padding:5px;margin:3px 0;box-shadow:inset 2px 2px #fff,3px 3px #777;overflow-wrap:anywhere}
 .panel h2,.panel h3{margin:0 0 8px;text-decoration:none;text-transform:none}
 .panel h2{font-size:20px}.panel h3{font-size:16px}
-.mainhead{background:#fff;color:#000;padding:8px;border:2px ridge #999;box-shadow:none;transform:none}
+.mainhead{background:#ffff00;color:#ff0000;padding:5px;border:6px groove #00ff00;box-shadow:4px 4px #ff00ff;transform:rotate(.15deg)}
 .mainhead h1{font:bold 26px "Times New Roman",serif;margin:8px 0}
 .mainhead p{line-height:normal}
-.stamp{display:inline;border:1px solid red;color:red;padding:1px;font-size:12px;font-weight:bold}
+.stamp{display:inline;border:4px double red;color:red;background:#ffff00;padding:2px;font-size:10px;font-weight:bold;letter-spacing:3px}
 .formrow{display:block;margin:10px 0}.formrow label{display:block}.formrow input,.formrow textarea,.formrow select{width:auto;max-width:100%;border:2px inset #aaa;padding:2px;background:white;color:black}
 .actions{display:block;margin:8px 0}.actions button{margin:2px;vertical-align:middle}
 .counter{font:13px "Courier New",monospace;background:#000;color:#0f0;padding:4px;overflow-wrap:anywhere}
-.notice,.warning{padding:6px;background:#ffff00;border:2px dashed red;margin:8px 0;font:12px "Courier New",monospace;line-height:normal;color:#000}
-.feed{max-height:120px;overflow:auto;border:2px inset #aaa;background:white;padding:4px;font:12px "Courier New",monospace}
-.status{font:12px "Times New Roman",serif;color:#333;line-height:normal}
-.footer{background:#000080;color:#fff;padding:8px;font:12px "Times New Roman",serif;text-align:center;border:3px ridge #aaa}
-.broken{display:inline;background:#ddd;color:#000;border:1px solid #777;padding:2px;font:11px Arial}
-.menu{display:block}.menu button{display:inline-block;width:auto;text-align:left;font-size:13px;margin:2px}
+.notice,.warning{padding:4px;background:#ff00ff;border:5px dotted lime;margin:4px 0;font:11px "Courier New",monospace;line-height:1.05;color:#000}
+.feed{max-height:75px;overflow:scroll;border:5px inset #f0f;background:#ffff00;padding:2px;font:10px "Courier New",monospace}
+.status{font:10px "Comic Sans MS",serif;color:#f00;line-height:1.05;background:#ffff00}
+.footer{background:#ff00ff;color:#00ff00;padding:4px;font:10px "Comic Sans MS",serif;text-align:center;border:7px ridge #ffff00;word-break:break-all}
+.broken{display:inline;background:#ff0000;color:#ffff00;border:3px dotted #00ff00;padding:2px;font:10px Arial}
+.menu{display:block;background:#00ffff;border:4px double red;padding:2px}.menu button{display:inline-block;width:auto;text-align:left;font-size:12px;margin:1px;background:#ff0;color:#f00;border:4px outset #0f0}
 .uglygrid{display:block}.uglygrid .panel{margin:5px 0}
-#toast{min-height:18px;font-weight:bold;color:#f00;overflow-wrap:anywhere}
+#toast{min-height:28px;font-weight:bold;color:#f00;overflow-wrap:anywhere;background:#00ffff;border:3px dashed #ff00ff;padding:3px;font-size:11px}
 .charpad{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin:5px 0}
 .charpad button{padding:3px 1px;min-width:0;background:#ddd;color:#000;border:2px outset #aaa;box-shadow:none;overflow:hidden;font:12px Arial,sans-serif}
 .charpad button:active{background:#aaa;border-style:inset}
@@ -62,7 +62,7 @@ input[type=checkbox]{width:auto;height:auto;accent-color:auto;vertical-align:mid
 <div class="fakecrumb">HOME &gt;&gt; LINKS &gt;&gt; OTHER LINKS &gt;&gt; YOU ARE HERE &gt;&gt; 404?</div>
 <div class="layout">
 <aside class="sidebox">
-<section class="panel"><h2>Navigation™</h2><div class="menu"><button data-view="challenge">▸ 89-Zeichen-Prüfung</button><button data-view="home">▸ Start (vielleicht)</button><button data-view="tasks">▸ Aufgabenverwaltung</button><button data-view="notes">▸ Notizzettelbereich</button><button data-view="settings">▸ Einstellungen der Einstellungen</button><button data-view="help">▸ Hilfe (nicht hilfreich)</button></div></section>
+<section class="panel"><h2>Navigation™</h2><div class="menu"><button data-view="challenge">▸ 89-Zeichen-Prüfung</button><button data-view="home">▸ Start (vielleicht)</button><button data-view="tasks">▸ Aufgabenverwaltung</button><button data-view="notes">▸ Notizzettelbereich</button><button data-view="settings">▸ Einstellungen der Einstellungen</button><button data-view="help">▸ Hilfe (nicht hilfreich)</button><button data-view="calendar">▸ Kalender der Qual</button><button data-view="inbox">▸ Posteingang (0 ungelesen?)</button><button data-view="shop">▸ Shop für unnütze Dinge</button><button data-view="archive">▸ Archiv der Klicks</button><button data-view="feedback">▸ Beschwerde einreichen</button><button data-view="calculator">▸ Taschenrechner 2001</button></div></section>
 <section class="panel"><h3>Systemzustand</h3><div class="counter" id="clock">ZEIT WIRD BERECHNET...</div><p class="status">Systemlaune: fragwürdig</p><div class="counter">Offene Aufgaben: <span id="sidebarTaskCount">0</span><br>Bearbeitete Aktionen: <span id="sidebarClickCount">0</span></div><p class="status">Diese Werte werden aus echten Aktionen berechnet.</p></section>
 </aside>
 <main class="brick"><section class="mainhead"><span class="stamp">NICHT ZERTIFIZIERT</span><h1 id="pageTitle">Willkommen im Problem</h1><p id="pageIntro">Willkommen auf meiner Homepage!!! Diese Seite wurde mit HTML und sehr wenig Geschmack erstellt. Bitte aktualisiere deinen Browser. Auflösung empfohlen: 640 × 480.</p><div class="actions"><button id="randomBtn">Zufällige Verwaltungsmaßnahme</button><button id="uselessBtn">Speichern ohne Grund</button></div><div id="toast" role="status" aria-live="polite"></div></section>
@@ -76,7 +76,7 @@ input[type=checkbox]{width:auto;height:auto;accent-color:auto;vertical-align:mid
 <section class="panel"><h3>Rechtliches</h3><p><small>Alle Knöpfe tun lokal etwas. Es werden keine Formulardaten an einen Server gesendet. Dieser Unsinn speichert nichts dauerhaft.</small></p><button id="legalBtn">Datenschutz-Text öffnen</button></section>
 </aside>
 </div>
-<footer class="footer">BRICKWALL v0.9 — OPTIMIERT FÜR 640×480 · Ein Backstein ist auch nur eine sehr schwere UI-Komponente.<br>Kein Konto. Kein Tracking. Keine externen Bibliotheken. Keine vernünftigen Entscheidungen.</footer>
+<footer class="footer">BRICKWALL v1.2 — OPTIMIERT FÜR 320×200 (NICHT GETESTET) · Ein Backstein ist auch nur eine sehr schwere UI-Komponente.<br>Kein Konto. Kein Tracking. Keine externen Bibliotheken. Keine vernünftigen Entscheidungen.</footer>
 <script>
 (()=>{'use strict';
 const $=s=>document.querySelector(s);
@@ -101,6 +101,12 @@ document.addEventListener('keydown',e=>{if(document.querySelector('#passPad')&&(
 const formPanel=$('#brickForm').closest('.panel');
 const pages={
  challenge:['Anmeldung zur Unannehmlichkeit','Erstellen Sie hier ausschließlich Testdaten. Keine echten Zugangsdaten verwenden.'],
+ calendar:['Kalender der Qual','Jeder Termin braucht drei Genehmigungen und eine zweite Bestätigung.'],
+ inbox:['Posteingang mit Zustellproblemen','Nachrichten werden nur lokal erzeugt. Antworten bringen nichts.'],
+ shop:['Shop für unnütze Dinge','Kaufen Sie digitale Backsteine mit völlig erfundenen Punkten.'],
+ archive:['Archiv der Klicks','Ein vollständiges Archiv Ihrer lokalen Aktionen, soweit der Browser sich erinnert.'],
+ feedback:['Beschwerdeformular 17-B','Ihre Beschwerde wird lokal registriert und automatisch abgelehnt.'],
+ calculator:['Taschenrechner 2001','Ein richtiger Taschenrechner, umständlich verpackt.'],
  home:['Willkommen im Problem','Die Startseite wurde sorgfältig unorganisiert.'],
  tasks:['Aufgabenverwaltung der Unvernunft','Hier lassen sich Aufgaben tatsächlich hinzufügen, abhaken und löschen.'],
  notes:['Notizzettelbereich','Notizen werden lokal auf diesem Gerät gespeichert.'],
@@ -121,6 +127,27 @@ function renderPage(key){
  view.innerHTML='<section class="panel"><h2>Aufgabenverwaltung</h2><form id="taskForm"><label for="taskInput">Neue Aufgabe</label><div class="actions"><input id="taskInput" required maxlength="120" placeholder="Eine Aufgabe, die wirklich existiert"><button type="submit">Hinzufügen</button></div></form><p id="taskStatus"></p><div id="taskList"></div><button id="clearTasks">Erledigte Aufgaben löschen</button></section>';
  $('#taskForm').addEventListener('submit',e=>{e.preventDefault();const value=$('#taskInput').value.trim();if(!value)return;tasks.push({text:value,done:false});persistTasks();$('#taskInput').value='';toast('Aufgabe gespeichert.');bump()});
  $('#clearTasks').addEventListener('click',()=>{tasks=tasks.filter(t=>!t.done);persistTasks();toast('Erledigte Aufgaben gelöscht.');bump()});persistTasks();
+ }else if(key==='calendar'){
+ view.innerHTML='<section class="panel"><h2>Terminverwaltung</h2><p>Wählen Sie Datum und Anlass. Jeder Termin wird lokal gespeichert.</p><label for="meetingDate">Datum der Nichtverfügbarkeit</label><input id="meetingDate" type="date"><label for="meetingText">Anlass</label><input id="meetingText" maxlength="80" placeholder="Grund der Verspätung"><div class="actions"><button id="addMeeting">Termin beantragen</button><button id="randomMeeting">Zufallstermin hinzufügen</button></div><p id="meetingStatus"></p><div id="meetingList"></div></section>';
+ const meetings=safeStore.get('meetings',[]);const drawMeetings=()=>{const box=$('#meetingList');box.replaceChildren();if(!meetings.length){box.textContent='Keine Termine. Verdächtig.';return}meetings.forEach((m,i)=>{const p=document.createElement('p');p.textContent=m.date+' — '+m.text+' [Genehmigung ausstehend] ';const b=document.createElement('button');b.textContent='Termin stornieren';b.onclick=()=>{meetings.splice(i,1);safeStore.set('meetings',meetings);drawMeetings();toast('Termin storniert. Der Kalender wurde informiert.');bump()};p.append(b);box.append(p)})};const addMeeting=(date,text)=>{if(!date||!text.trim()){$('#meetingStatus').textContent='Fehler 17B: Datum oder Anlass fehlt.';return}meetings.push({date,text:text.trim()});safeStore.set('meetings',meetings);$('#meetingStatus').textContent='Termin eingetragen. Er wurde nicht an andere Personen gesendet.';drawMeetings();bump()};$('#addMeeting').onclick=()=>addMeeting($('#meetingDate').value,$('#meetingText').value);$('#randomMeeting').onclick=()=>{addMeeting(new Date(Date.now()+Math.random()*30*86400000).toISOString().slice(0,10),['Sitzung zur Sitzungsplanung','Pause vom Pausenmachen','Backsteininventur','Überprüfung der Überprüfung'][Math.floor(Math.random()*4)]);bump()};drawMeetings();
+ }else if(key==='inbox'){
+ const inbox=safeStore.get('inbox',[{subject:'Willkommen im Posteingang',body:'Diese Nachricht wurde lokal erzeugt.',read:false}]);
+ view.innerHTML='<section class="panel"><h2>Posteingang</h2><p>Nachrichten lesen, als gelesen markieren oder löschen.</p><div class="actions"><button id="newMail">Neue Systemnachricht erzeugen</button><button id="markAll">Alle als gelesen markieren</button></div><div id="mailList"></div></section>';
+ const drawMail=()=>{const box=$('#mailList');box.replaceChildren();inbox.forEach((m,i)=>{const p=document.createElement('div');p.className='panel';const h=document.createElement('h3');h.textContent=(m.read?'[GELESEN] ':'[UNGELESEN] ')+m.subject;const body=document.createElement('p');body.textContent=m.body;const read=document.createElement('button');read.textContent='Als gelesen markieren';read.onclick=()=>{m.read=true;safeStore.set('inbox',inbox);drawMail();bump()};const del=document.createElement('button');del.textContent='Nachricht löschen';del.onclick=()=>{inbox.splice(i,1);safeStore.set('inbox',inbox);drawMail();bump()};p.append(h,body,read,del);box.append(p)})};$('#newMail').onclick=()=>{inbox.unshift({subject:['Ihre Anfrage wurde vertagt','Systemmeldung Nr. 404','Sie haben eine neue Benachrichtigung über Benachrichtigungen'][Math.floor(Math.random()*3)],body:'Diese automatisch erzeugte Nachricht enthält keine wichtigen Informationen. Erzeugt: '+new Date().toLocaleString('de-DE'),read:false});safeStore.set('inbox',inbox);drawMail();toast('Neue lokale Nachricht eingetroffen.');bump()};$('#markAll').onclick=()=>{inbox.forEach(m=>m.read=true);safeStore.set('inbox',inbox);drawMail();toast('Alle Nachrichten gelesen.');bump()};drawMail();
+ }else if(key==='shop'){
+ let points=safeStore.get('points',37),items=safeStore.get('inventory',[]);
+ view.innerHTML='<section class="panel"><h2>Backstein-Shop</h2><p>Ihr Guthaben: <strong id="points"></strong> Fantasiepunkte</p><p>Jeder Kauf ist lokal und hat keinen Geldwert.</p><div id="shopItems"></div><h3>Inventar</h3><div id="inventory"></div><button id="dailyPoints">Tägliche Punkte beantragen (auch heute schon)</button></section>';
+ const products=[['Unsichtbarer Backstein',13,'Erzeugt ein Gefühl von Besitz.'],['Premium-Klick',21,'Ein Klick mit Verwaltungsstempel.'],['Papierkorb-Zertifikat',8,'Bestätigt, dass etwas gelöscht werden könnte.'],['Goldener Fehler 404',34,'Ein Fehler in besonders schlechter Qualität.']];
+ $('#points').textContent=points;const shop=$('#shopItems');products.forEach((p,i)=>{const row=document.createElement('div');row.className='panel';const title=document.createElement('b');title.textContent=p[0]+' — '+p[1]+' Punkte';const desc=document.createElement('p');desc.textContent=p[2];const btn=document.createElement('button');btn.textContent='Kaufen und bereuen';btn.onclick=()=>{if(points<p[1]){toast('Kauf abgelehnt: zu wenig Fantasiepunkte.');return}points-=p[1];items.push(p[0]);safeStore.set('points',points);safeStore.set('inventory',items);$('#points').textContent=points;drawInventory();toast('Gekauft: '+p[0]);bump()};row.append(title,desc,btn);shop.append(row)});const drawInventory=()=>{$('#inventory').textContent=items.length?items.join(' | '):'Inventar leer. Wie geplant.'};$('#dailyPoints').onclick=()=>{points+=5;safeStore.set('points',points);$('#points').textContent=points;toast('+5 Fantasiepunkte genehmigt.');bump()};drawInventory();
+ }else if(key==='archive'){
+ view.innerHTML='<section class="panel"><h2>Aktionsarchiv</h2><p>Zeigt lokal gespeicherte Formularvorgänge und eine Kopie der aktuellen Ereignisliste.</p><button id="refreshArchive">Archiv neu sortieren</button><button id="clearArchive">Formulararchiv leeren</button><div id="archiveList"></div></section>';
+ const drawArchive=()=>{const box=$('#archiveList');box.replaceChildren();const data=safeStore.get('records',[]);if(!data.length){box.textContent='Keine archivierten Formulare oder Tickets.';return}data.slice().reverse().forEach((r,i)=>{const pre=document.createElement('pre');pre.style.cssText='white-space:pre-wrap;overflow-wrap:anywhere;border:2px inset #999;padding:3px;background:#fff';pre.textContent=JSON.stringify(r,null,2);box.append(pre)})};$('#refreshArchive').onclick=()=>{drawArchive();toast('Archiv neu sortiert (inhaltlich identisch).');bump()};$('#clearArchive').onclick=()=>{if(confirm('Archiv wirklich löschen?')){safeStore.set('records',[]);records=[];drawArchive();toast('Archiv geleert.');bump()}};drawArchive();
+ }else if(key==='feedback'){
+ view.innerHTML='<section class="panel"><h2>Beschwerde 17-B/4</h2><label for="complaint">Was hat Sie verärgert?</label><textarea id="complaint" rows="5" style="width:100%" maxlength="500" placeholder="Bitte beschweren Sie sich sachlich unsachlich."></textarea><label for="severity">Beschwerdestufe</label><select id="severity"><option>Leicht genervt</option><option>Deutlich irritiert</option><option>Ich möchte mit dem Backstein sprechen</option><option>MAXIMALE BÜROKRATIE</option></select><div class="actions"><button id="sendComplaint">Beschwerde einreichen</button><button id="clearComplaint">Beschwerde widerrufen</button></div><p id="complaintStatus"></p><div id="complaintHistory"></div></section>';
+ const complaints=safeStore.get('complaints',[]);const drawComplaints=()=>{$('#complaintHistory').replaceChildren();complaints.forEach(x=>{const p=document.createElement('p');p.textContent=x.date+' — '+x.severity+' — '+x.text;$('#complaintHistory').append(p)})};$('#sendComplaint').onclick=()=>{const t=$('#complaint').value.trim();if(!t){$('#complaintStatus').textContent='Ablehnung: Beschwerde ist leer.';return}complaints.push({text:t,severity:$('#severity').value,date:new Date().toLocaleString('de-DE'),status:'lokal registriert'});safeStore.set('complaints',complaints);$('#complaintStatus').textContent='Beschwerde registriert. Ergebnis: abgelehnt. Sie können erneut widersprechen.';drawComplaints();bump()};$('#clearComplaint').onclick=()=>{$('#complaint').value='';$('#complaintStatus').textContent='Eingabe gelöscht. Die Verwaltung fühlt sich entlastet.';bump()};drawComplaints();
+ }else if(key==='calculator'){
+ view.innerHTML='<section class="panel"><h2>Umständlicher Taschenrechner</h2><p>Geben Sie zwei Zahlen ein. Ergebnis ist mathematisch korrekt; das Formular ist nicht zuständig für Ihren Frust.</p><label for="numA">Zahl A</label><input id="numA" type="number" value="12"><label for="operation">Operation</label><select id="operation"><option value="+">Addition</option><option value="-">Subtraktion</option><option value="*">Multiplikation</option><option value="/">Division</option><option value="%">Modulo</option><option value="**">Potenzierung</option></select><label for="numB">Zahl B</label><input id="numB" type="number" value="4"><button id="calculate">Berechnung beantragen</button><p id="calcResult"></p><p id="calcComplaint"></p><button id="complainCalc">Gegen das Ergebnis protestieren</button></section>';
+ $('#calculate').onclick=()=>{const a=Number($('#numA').value),b=Number($('#numB').value),op=$('#operation').value;let v=op==='+'?a+b:op==='-'?a-b:op==='*'?a*b:op==='/'?(b===0?'Division durch null nicht möglich':a/b):op==='%'?(b===0?'Modulo durch null nicht möglich':a%b):a**b;$('#calcResult').textContent='Amtlich bestätigtes Ergebnis: '+v;safeStore.set('lastCalculation',{a,b,op,result:v,date:new Date().toISOString()});bump()};$('#complainCalc').onclick=()=>{$('#calcComplaint').textContent='Protest eingegangen. Das Ergebnis bleibt unverändert.';bump()};
  }else if(key==='notes'){
  view.innerHTML='<section class="panel"><h2>Notizen</h2><label for="note">Notiztext</label><textarea id="note" rows="7" style="width:100%" placeholder="Hier etwas Sinnvolles schreiben"></textarea><div class="actions"><button id="saveNote">Notiz speichern</button><button id="clearNote">Notiz löschen</button></div><p id="noteStatus"></p></section>';
  $('#note').value=notes;$('#noteStatus').textContent='Notiz wird lokal gespeichert.';
